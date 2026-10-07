@@ -63,10 +63,10 @@ blocks:
     min_len: '200'
     orient: QtCore.Qt.Horizontal
     rangeType: float
-    start: 192e3
+    start: '1000000'
     step: 1e3
-    stop: 56e6
-    value: '3840000'
+    stop: '50000000'
+    value: '20000000'
     widget: counter_slider
   states:
     bus_sink: false
@@ -84,16 +84,47 @@ blocks:
     min_len: '200'
     orient: QtCore.Qt.Horizontal
     rangeType: float
-    start: 70e6
+    start: 80e6
     step: 200e3
-    stop: 6e9
-    value: '102100000'
+    stop: 100e6
+    value: 90e6
     widget: slider
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
     coordinate: [320, 8.0]
+    rotation: 0
+    state: enabled
+- name: iio_pluto_source_0
+  id: iio_pluto_source
+  parameters:
+    affinity: ''
+    alias: ''
+    bandwidth: '10000000'
+    bbdc: 'True'
+    buffer_size: '32768'
+    comment: ''
+    filter: ''
+    filter_source: '''Off'''
+    fpass: '0'
+    frequency: '100000000'
+    fstop: '0'
+    gain1: '''manual'''
+    len_tag_key: packet_len
+    manual_gain1: rf_gain
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    quadrature: 'True'
+    rfdc: 'True'
+    samplerate: samp_rate
+    type: fc32
+    uri: ip:pluto.local
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [896, 136.0]
     rotation: 0
     state: enabled
 - name: qtgui_sink_x_0
@@ -123,6 +154,35 @@ blocks:
     bus_source: false
     bus_structure: null
     coordinate: [232, 464.0]
+    rotation: 180
+    state: disabled
+- name: qtgui_sink_x_0_0
+  id: qtgui_sink_x
+  parameters:
+    affinity: ''
+    alias: ''
+    bw: samp_rate
+    comment: ''
+    fc: tuning
+    fftsize: '1024'
+    gui_hint: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    name: Spectrum Analyzer
+    plotconst: 'True'
+    plotfreq: 'True'
+    plottime: 'True'
+    plotwaterfall: 'True'
+    rate: '10'
+    showports: 'True'
+    showrf: 'True'
+    type: complex
+    wintype: window.WIN_BLACKMAN_hARRIS
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [888, 432.0]
     rotation: 180
     state: enabled
 - name: uhd_usrp_source_0
@@ -301,7 +361,7 @@ blocks:
     dc_offs_enb8: default
     dc_offs_enb9: default
     dev_addr: '""'
-    dev_args: ''
+    dev_args: '""'
     gain0: rf_gain
     gain1: '0'
     gain10: '0'
@@ -558,13 +618,15 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [224, 280.0]
+    coordinate: [280, 264.0]
     rotation: 0
-    state: enabled
+    state: disabled
 
 connections:
+- [iio_pluto_source_0, '0', qtgui_sink_x_0_0, '0']
 - [qtgui_sink_x_0, freq, qtgui_sink_x_0, freq]
 - [qtgui_sink_x_0, freq, uhd_usrp_source_0, command]
+- [qtgui_sink_x_0_0, freq, qtgui_sink_x_0_0, freq]
 - [uhd_usrp_source_0, '0', qtgui_sink_x_0, '0']
 
 metadata:
