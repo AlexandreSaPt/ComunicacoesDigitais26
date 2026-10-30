@@ -1,2 +1,6 @@
 /Wifi_Project_Baseband_recordings/
 *.tar
+*.pyc
+build/
+.vscode/
+gr-foo/
