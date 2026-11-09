@@ -1,6 +1,21 @@
-/Wifi_Project_Baseband_recordings/
+# Arquivos compactados e pacotes
 *.tar
+*.tar.gz
+*.deb
+
+# Arquivos Python e Compilação
 *.pyc
 build/
+usr/
+lib/
+
+# Configurações do Editor e Projetos
 .vscode/
 gr-foo/
+
+# Pastas de gravações e dados pesados
+Wifi_Project_Baseband_recordings/
+Testing Data/Adalm-Pluto_Recording/Recordings/
+Testing Data/Adalm-Pluto_Recording/To test/
+
+

@@ -19,13 +19,14 @@ import ieee802_11
 
 class top_block(gr.top_block):
 
-    def __init__(self, threshold=0.56):
+    def __init__(self, threshold=0.56, file_path='/mnt/c/Users/josed/Universidade/ComDig/Testing Data/wifi_TestingTheCode_Home_1.bin'):
         gr.top_block.__init__(self, "Top Block")
 
         ##################################################
         # Parameters
         ##################################################
         self.threshold = threshold
+        self.file_path = file_path
 
         ##################################################
         # Variables
@@ -48,7 +49,7 @@ class top_block(gr.top_block):
         self.blocks_null_sink_0 = blocks.null_sink(gr.sizeof_gr_complex*1)
         self.blocks_multiply_xx_0 = blocks.multiply_vcc(1)
         self.blocks_message_debug_0 = blocks.message_debug()
-        self.blocks_file_source_0 = blocks.file_source(gr.sizeof_gr_complex*1, '/mnt/c/Users/josed/Universidade/ComDig/Wifi_Project_Baseband_recordings/Sample3_20MHz_Channel100.bin', False)
+        self.blocks_file_source_0 = blocks.file_source(gr.sizeof_gr_complex*1, self.file_path, False)
         self.blocks_divide_xx_0 = blocks.divide_ff(1)
         self.blocks_delay_0 = blocks.delay(gr.sizeof_gr_complex*1, 16)
         self.blocks_conjugate_cc_0 = blocks.conjugate_cc()
@@ -77,6 +78,13 @@ class top_block(gr.top_block):
 
     def set_threshold(self, threshold):
         self.threshold = threshold
+
+    def get_file_path(self):
+        return self.file_path
+
+    def set_file_path(self, file_path):
+        self.file_path = file_path
+        self.blocks_file_source_0.open(self.file_path)
 
     def get_window_size(self):
         return self.window_size
@@ -122,6 +130,10 @@ def argument_parser():
     parser.add_option(
         "", "--threshold", dest="threshold", type="eng_float", default=eng_notation.num_to_str(0.56),
         help="Set threshold [default=%default]")
+    parser.add_option(
+        "-f", "--file-path", dest="file_path", type="string", 
+        default='/mnt/c/Users/josed/Universidade/ComDig/Testing Data/wifi_TestingTheCode_Home_1.bin',
+        help="Set input file path [default=%default]")
     return parser
 
 
@@ -129,7 +141,7 @@ def main(top_block_cls=top_block, options=None):
     if options is None:
         options, _ = argument_parser().parse_args()
 
-    tb = top_block_cls(threshold=options.threshold)
+    tb = top_block_cls(threshold=options.threshold, file_path=options.file_path)
     tb.start()
     try:
         raw_input('Press Enter to quit: ')
