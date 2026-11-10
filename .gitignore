@@ -2,6 +2,7 @@
 *.tar
 *.tar.gz
 *.deb
+*.zip
 
 # Arquivos Python e Compilação
 *.pyc
@@ -14,8 +15,5 @@ lib/
 gr-foo/
 
 # Pastas de gravações e dados pesados
-Wifi_Project_Baseband_recordings/
-Testing Data/Adalm-Pluto_Recording/Recordings/
-Testing Data/Adalm-Pluto_Recording/To test/
-
+*.bin
 
